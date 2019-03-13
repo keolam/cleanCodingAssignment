@@ -31,25 +31,25 @@ FUNCTION do(x, y)              // Creating a new function
 END FUNCTION
 
 ```
-The above function needs two adjustments to be considered clean code. The PRINT z command only needs to be written once, outside of the IF statements, and the function should be renamed to something that tells you what it does at first glance.
+The above function needs two adjustments to be considered clean code. The PRINT z command only needs to be written once, outside of the IF statements, and then the function and variables should be renamed to something that tells you what they represent at first glance.
 
 Refactored:
 
 ```
 
-FUNCTION convertTempUnit(x, y)    // Creating a new function
+FUNCTION convertTempUnit(deg, unit)    
 
-  IF y = "F" THEN                 // Check if y is equal "F"
+  IF unit = "F" THEN                 
 
-    SET z to (x−32) * (5/9)       // Formula to convert degrees Fahrenheit to celsius
+    SET converted to (deg − 32) * (5/9)      
 
-  ELSE IF y = "C" THEN            // If y not equal to "F", check if equal to "C"
+  ELSE IF unit = "C" THEN            
 
-    SET z to x * 1.8000 + 32.00   // Formula to convert degrees celsius to Fahrenheit
+    SET converted to deg * 1.8000 + 32.00   
 
   END IF
 
-  PRINT z                         // Print result
+  PRINT converted                         
 
 END FUNCTION
 
