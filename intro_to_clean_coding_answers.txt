@@ -12,7 +12,7 @@ Today, many greenhouses are maintained by computers. Humidity and temperature ca
 
 ```
 
-FUNCTION do(x, y)               // Creating a new function
+FUNCTION do(x, y)              // Creating a new function
 
  IF y = "F" THEN               // Check if y is equal "F"
 
@@ -31,23 +31,25 @@ FUNCTION do(x, y)               // Creating a new function
 END FUNCTION
 
 ```
-The above function needs one adjustment to be considered clean code. The PRINT z command only needs to be written once, outside of the IF statements. Refactored:
+The above function needs two adjustments to be considered clean code. The PRINT z command only needs to be written once, outside of the IF statements, and the function should be renamed to something that tells you what it does at first glance.
+
+Refactored:
 
 ```
 
-FUNCTION do(x, y)               // Creating a new function
+FUNCTION convertTempUnit(x, y)    // Creating a new function
 
-  IF y = "F" THEN               // Check if y is equal "F"
+  IF y = "F" THEN                 // Check if y is equal "F"
 
     SET z to (x−32) * (5/9)       // Formula to convert degrees Fahrenheit to celsius
 
-  ELSE IF y = "C" THEN          // If y not equal to "F", check if equal to "C"
+  ELSE IF y = "C" THEN            // If y not equal to "F", check if equal to "C"
 
     SET z to x * 1.8000 + 32.00   // Formula to convert degrees celsius to Fahrenheit
 
   END IF
 
-  PRINT z                       // Print result
+  PRINT z                         // Print result
 
 END FUNCTION
 
