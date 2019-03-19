@@ -1,0 +1,222 @@
+1. What are some pros and cons of using linked lists instead of arrays?
+
+Linked lists are more efficient with disc-space and memory. Linked-list data elements called nodes can be stored at many different non-contiguous spaces in memory and therefore requires less disc-space for storage. Arrays store their data elements as one contiguous data set and therefore require more memory, which incidently requires more work for the computer to rearrange data to make space larger arrays. 
+
+Linked-lists have an ineffeicient linear time-complexity that makes the computer search through each node one-by-one until it finds the node it's looking for. Arrays on the other hand have a relatively faster time-complexity because a search can be executed using the index.
+
+
+
+2. Come up with a real world example of a linked list.
+
+The forward and back functions on a web browser can be maintained using a linked-list.
+
+
+Programming Questions
+
+1.  The linked list push function should take a value, create a node, 
+    and add it to the end of a list. Below is pseudocode for a push 
+    function for a singly linked list. However, there is something 
+    wrong with it. Submit both an explanation of the bug and a 
+    functional implementation of the method.
+
+FUNCTION push(element)
+CREATE node
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist
+ THEN SET head to node
+ELSE
+ SET current to head
+ SET current.next to node
+END IF
+END FUNCTION
+
+The above function needs to consider if current.next already exists, and address how to update current.next when a new node is added:
+
+FUNCTION push(element) {
+CREATE node
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist
+ THEN SET head to node
+ELSE
+ SET current to head
+ WHILE current.next exists
+   SET current to current.next
+ END WHILE
+SET current.next to node
+END IF
+END FUNCTION
+
+```js
+
+function push(element) {
+  let node = {};
+  node.value = element;
+  node.next = null;
+
+  if (list.head === null) {
+    list.head = node;
+  } else {
+    let current = list.head;
+    while(current.next) {
+      current = current.next;
+    }
+    current.next = node;
+  }
+}
+
+
+//test ==>
+
+let list = {
+  head: null
+}
+
+push('a');
+push('b');
+push('c');
+push('d');
+push('e');
+push('f');
+push('g');
+push('h');
+
+console.dir(list, {depth: null}); 
+
+// result ==> {
+//   head: {
+//     value: 'a',
+//     next: {
+//       value: 'b',
+//       next: {
+//         value: 'c',
+//         next: {
+//           value: 'd',
+//           next: {
+//             value: 'e',
+//             next: {
+//               value: 'f',
+//               next: {
+//                 value: 'g', 
+//                 next: {
+//                   value: 'h', 
+//                   next: null 
+//                 } 
+// } } } } } } } } 
+
+```
+
+2. Given an unsorted singly linked list, remove all duplicates from the linked list.
+
+Example
+Input: a -> c -> d -> d -> a
+Output: a -> c -> d
+
+```js
+
+function removeDuplicate(list) {
+  let arr = [];
+  let node = list.head; 
+  let prev = null; 
+  while(node !== null) {
+     if (arr.indexOf(node.value) === -1) {
+      arr.push(node.value);      
+      prev = node; 
+      node = node.next;  
+    } else if (prev === null) { 
+      list.head = node; 
+    } else if (node.next === null) {     
+      node = prev;
+    } else {
+    prev.next = node.next.next;
+    prev = node;       
+    node = node.next; 
+    }
+  }
+}
+
+//test ==>
+
+let list = {
+  head: null
+}
+
+push('a');
+push('c');
+push('d');
+push('d');
+push('a');
+
+removeDuplicate(list);
+console.dir(list, {depth: null});
+
+//result ==> {
+  head: {
+    value: 'a',
+    next: {
+      value: 'c', 
+      next: {
+        value: 'd', 
+        next: null
+      } 
+} } }
+
+```
+
+
+3. Given an unsorted singly linked list, reverse it.
+
+Example
+Input: a -> b -> c -> d
+Output: d -> c -> b -> a
+
+```js
+
+function reverse(list) {
+  let node = list.head;
+  let previous;
+  let temp;
+  while (node) {
+    temp = node.next;
+    node.next = previous;
+    previous = node;
+    node = temp;
+  }
+  return previous;
+}
+
+
+//test ==>
+
+let list = {
+  head: null
+}
+
+push('a');
+push('b');
+push('c');
+push('d');
+
+let revList = reverse(list);
+console.dir(revList, {depth: null});
+
+//result ==> {
+
+value: 'd',
+  next: {
+    value: 'c',
+    next: { 
+      value: 'b', 
+      next: { 
+        value: 'a', 
+        next: undefined 
+      } 
+} } }
+
+```
+
+
+
