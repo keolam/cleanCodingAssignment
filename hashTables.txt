@@ -1,0 +1,127 @@
+1. What is a hash table?
+
+A: A hash table is a data structure that stores data as key-value pairs, but uses an array-like structure as opposed a javascript object. The data is by organized by employing hashing functions to assign the key-values pairs to numerical indices.
+
+2: What is hashing?
+
+A: Hashing is where a string of data is converted into a fixed-length hash code using a hashing function
+
+3. How does a hash table store data?
+
+A:  Hash Tables store data in key/value pairs called tuples. Each tuple is stored at a unique index in an array.
+It does this by first running the key from each pair through a hashing function, which returns a specific, fixed-length number, called a hash code. The hash code is then converted into an index for the array to store the value.
+
+4. How are hash tables and objects different?
+
+A: Hash tables are like objects in that they both stre data as key/value pairs. Hash tables have the advantage of indexing each key/value pair so searching. Hash tables also have the advantage of storing multiple, consistently formatted values under one key, whereas objects allow you to store one value per key.
+
+5. Determine whether you would use a hash table or an object to store each of the following pieces of data:
+
+  A list of pets and their unique names: Object
+  
+  The name, age, and the birthday of your best friend: Hash Table
+  
+  The name and location of every company in a given city: Hash Table
+  
+  All of the books checked out from a library by a particular individual: Hash Table
+  
+  The primary and secondary phone numbers for a contact: Hash Table
+
+
+Programming Questions
+
+
+1. Create a hash table that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers.
+
+```js
+
+hashCode = function(string){
+  return string.split('').reduce(function(a,b){
+    a = ((a<<5)-a)+b.charCodeAt(0);
+    return a&a;
+  }, 0);         
+}
+
+let customerData = new Map();
+
+let a = Math.abs(hashCode('415-486-0172')) % 10;
+customerData.set(a, ['Lily Munster', '1313 Mockingbird Lane']);
+
+let j = Math.abs(hashCode('415-210-4381'))% 10;
+customerData.set(j, ['Booker','21 Jump Street']);
+
+let k = Math.abs(hashCode('415-213-4789'))% 10;
+customerData.set(k, ['Freddy Krueger', '666 Elm Street']);
+
+Array.from(customerData); // ==> 
+
+//[ [ 4, [ 'Lily Munster', '1313 Mockingbird Lane' ] ],
+//  [ 7, [ 'Booker', '21 Jump Street' ] ],
+//  [ 2, [ 'Freddy Krueger', '666 Elm Street' ] ] ]
+
+customerData.get(a); // ==> [ 'Lily Munster', '1313 Mockingbird Lane' ]
+
+
+
+
+```
+
+2. Create a hash table that allows a store owner to track their store's inventory and quantity.
+
+```js
+
+let storeInventory = new Map();
+
+let a = Math.abs(hashCode('samplers')) % 10;
+storeInventory.set(a, 14);
+
+let b = Math.abs(hashCode('electric guitars')) % 10;
+storeInventory.set(b, 26);
+
+let c = Math.abs(hashCode('bass guitars')) % 10;
+storeInventory.set(c, 6);
+
+let d = Math.abs(hashCode('synthesizers')) % 10;
+storeInventory.set(d, 32);
+
+let e = Math.abs(hashCode('drum machines')) % 10;
+storeInventory.set(e, 8);
+
+Array.from(storeInventory); // ==>
+//[ [ 9, 14 ], [ 2, 26 ], [ 8, 6 ], [ 7, 32 ], [ 4, 8 ] ]
+storeInventory.get(c); // ==> 6
+
+```
+
+
+
+3. Create a hash table that allows digital copies of newspapers to be entered and searched by publisher and publication date.
+
+```js
+
+let newspaperList = [];
+let issueBG254 = JSON.stringify({'section A': 'Headlines...', 'section B': 'Sports...'});
+let issueWP581 = JSON.stringify({'section A': 'Front Page...', 'section B': 'Politics...'});
+let issueNYT671 = JSON.stringify({'section A': 'National News...', 'section B': 'Business...'});
+
+let a = Math.abs(hashCode("{'boston globe': 'december 12, 2018'}")) % 5;
+let b = Math.abs(hashCode("{'washington post', 'jannuary 27, 2019'}")) % 5;
+let c = Math.abs(hashCode("{'new york times': 'may 7, 2015'}")) % 5;
+
+newspaperList[a] = issueBG254;
+newspaperList[b] = issueWP581;
+newspaperList[c] = issueNYT671;
+newspaperList; // ==>
+// [ '{"section A":"Front Page...","section B":"Politics..."}',
+//   <2 empty items>,
+//   '{"section A":"Headlines...","section B":"Sports..."}',
+//   '{"section A":"National News...","section B":"Business..."}' ]
+
+
+JSON.parse(newspaperList[a]); // ==> 
+//{ 'section A': 'Headlines...', 'section B': 'Sports...' }
+
+```
+
+
+
