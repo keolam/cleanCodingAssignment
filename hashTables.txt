@@ -19,7 +19,7 @@ A: Hash tables are like objects in that they both stre data as key/value pairs. 
 
   A list of pets and their unique names: Object
   
-  The name, age, and the birthday of your best friend: Hash Table
+  The name, age, and the birthday of your best friend: Object
   
   The name and location of every company in a given city: Hash Table
   
@@ -35,34 +35,72 @@ Programming Questions
 
 ```js
 
-hashCode = function(string){
-  return string.split('').reduce(function(a,b){
-    a = ((a<<5)-a)+b.charCodeAt(0);
-    return a&a;
-  }, 0);         
+const hashTable = function(tableLength){
+  let result = {};
+  let storage = [];
+
+  result.add = function(addObj) {
+    let key = addObj.phone;
+    let val = JSON.stringify(addObj);
+    let index = hashCode(key, tableLength);
+
+    let bucket = storage[index];
+    if (!bucket) {
+      bucket = [];
+      storage[index] = bucket;
+    }
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        tuple[1] = val;
+        return;
+      }
+    }
+    bucket.push([key, val]);
+  };
+
+  result.find = function(findObj) {
+    let key = findObj.phone;
+    let index = hashCode(key, tableLength);
+    let bucket = storage[index];
+    if (!bucket) {return null;}
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        return JSON.parse(tuple[1]);
+      }
+    }
+    return "Error: key/value pair not in Hash Table";
+  };
+
+  result.print = function() {
+    return storage;
+  };
+  
+  return result;
+};
+
+let customerInfo = hashTable(5);
+
+let customer1 = {
+  'name': 'Lily Munster',
+  'address': '1313 Mockingbird Lane',
+  'phone': '415-486-0172'
 }
-
-let customerData = new Map();
-
-let a = Math.abs(hashCode('415-486-0172')) % 10;
-customerData.set(a, ['Lily Munster', '1313 Mockingbird Lane']);
-
-let j = Math.abs(hashCode('415-210-4381'))% 10;
-customerData.set(j, ['Booker','21 Jump Street']);
-
-let k = Math.abs(hashCode('415-213-4789'))% 10;
-customerData.set(k, ['Freddy Krueger', '666 Elm Street']);
-
-Array.from(customerData); // ==> 
-
-//[ [ 4, [ 'Lily Munster', '1313 Mockingbird Lane' ] ],
-//  [ 7, [ 'Booker', '21 Jump Street' ] ],
-//  [ 2, [ 'Freddy Krueger', '666 Elm Street' ] ] ]
-
-customerData.get(a); // ==> [ 'Lily Munster', '1313 Mockingbird Lane' ]
-
-
-
+let customer2 = {
+  'name': 'Booker',
+  'address': '21 Jump Street',
+  'phone': '415-210-4381'
+}
+let customer3 = {
+  'name': 'Freddy Krueger',
+  'address': '666 Elm Street',
+  'phone': '415-213-4789'
+}
+customerInfo.add(customer1);
+customerInfo.add(customer2);
+customerInfo.add(customer3);
+customerInfo.find({phone: '415-213-4789'});
 
 ```
 
@@ -70,26 +108,60 @@ customerData.get(a); // ==> [ 'Lily Munster', '1313 Mockingbird Lane' ]
 
 ```js
 
-let storeInventory = new Map();
+const hashTable = function(tableLength){
+  let result = {};
+  let storage = [];
 
-let a = Math.abs(hashCode('samplers')) % 10;
-storeInventory.set(a, 14);
+  result.add = function(addObj) {
+    let key = Object.keys(addObj)[0];
+    let val = Object.values(addObj)[0];
+    let index = hashCode(key, tableLength);
 
-let b = Math.abs(hashCode('electric guitars')) % 10;
-storeInventory.set(b, 26);
+    let bucket = storage[index];
+    if (!bucket) {
+      bucket = [];
+      storage[index] = bucket;
+    }
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        tuple[1] = val;
+        return;
+      }
+    }
+    bucket.push([key, val]);
+  };
 
-let c = Math.abs(hashCode('bass guitars')) % 10;
-storeInventory.set(c, 6);
+  result.find = function(findObj) {
+    let key = findObj.item;
+    console.log(key);
+    let index = hashCode(key, tableLength);
+    let bucket = storage[index];
+    if (!bucket) {return null;}
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        return {[key]: tuple[1]};
+      }
+    }
+    return "Error: key/value pair not in Hash Table";
+  };
 
-let d = Math.abs(hashCode('synthesizers')) % 10;
-storeInventory.set(d, 32);
+  result.print = function() {
+    return storage;
+  };
+  
+  return result;
+};
 
-let e = Math.abs(hashCode('drum machines')) % 10;
-storeInventory.set(e, 8);
+let storeInventory = hashTable(10);
+storeInventory.add({'samplers': 14});
+storeInventory.add({'electric guitars': 26});
+storeInventory.add({'bass guitars': 6});
+storeInventory.add({'synthesizers': 32});
+storeInventory.add({'drum machines': 8});
 
-Array.from(storeInventory); // ==>
-//[ [ 9, 14 ], [ 2, 26 ], [ 8, 6 ], [ 7, 32 ], [ 4, 8 ] ]
-storeInventory.get(c); // ==> 6
+storeInventory.find({'item': 'drum machines'});
 
 ```
 
@@ -99,27 +171,88 @@ storeInventory.get(c); // ==> 6
 
 ```js
 
-let newspaperList = [];
-let issueBG254 = JSON.stringify({'section A': 'Headlines...', 'section B': 'Sports...'});
-let issueWP581 = JSON.stringify({'section A': 'Front Page...', 'section B': 'Politics...'});
-let issueNYT671 = JSON.stringify({'section A': 'National News...', 'section B': 'Business...'});
+const hashTable = function(tableLength){
+  let result = {};
+  let storage = [];
 
-let a = Math.abs(hashCode("{'boston globe': 'december 12, 2018'}")) % 5;
-let b = Math.abs(hashCode("{'washington post', 'jannuary 27, 2019'}")) % 5;
-let c = Math.abs(hashCode("{'new york times': 'may 7, 2015'}")) % 5;
+  result.add = function(addObj) {
+    let key = addObj.publisher + addObj.date;
+    let val = addObj.paper;
+    let index = hashCode(key, tableLength);
 
-newspaperList[a] = issueBG254;
-newspaperList[b] = issueWP581;
-newspaperList[c] = issueNYT671;
-newspaperList; // ==>
-// [ '{"section A":"Front Page...","section B":"Politics..."}',
-//   <2 empty items>,
-//   '{"section A":"Headlines...","section B":"Sports..."}',
-//   '{"section A":"National News...","section B":"Business..."}' ]
+    let bucket = storage[index];
+    if (!bucket) {
+      bucket = [];
+      storage[index] = bucket;
+    }
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        tuple[1] = val;
+        return;
+      }
+    }
+    bucket.push([key, val]);
+  };
+
+  result.find = function(findObj) {
+    let key = findObj.publisher + findObj.date;
+    let index = hashCode(key, tableLength);
+    let bucket = storage[index];
+    if (!bucket) {return null;}
+    for (let i = 0; i < bucket.length; i++) {
+      let tuple = bucket[i];
+      if (tuple[0] === key) {
+        return {'publisher': findObj.publisher, 'date': findObj.date, 'paper':  tuple[1]};
+      }
+    }
+    return "Error: key/value pair not in Hash Table";
+  };
+
+  result.print = function() {
+    return storage;
+  };
+
+  return result;
+};
+
+let newspaperList = hashTable(4);
+
+let newspaper1 = {
+  publisher: 'boston globe',
+  date: 'december 12, 2018',
+  paper: 'How to pronounce the letter R'
+}
+
+let newspaper2 = {
+  publisher: 'washington post',
+  date: 'january 27, 2019',
+  paper: 'Lobby your Congressman to Maximize Profits'
+}
+
+let newspaper3 = {
+  publisher: 'new york times',
+  date: 'may 7, 2015',
+  paper: 'Hipster alert: Bringing Wall Street to Williamsberg'
+}
+
+let findObj1 = {
+  publisher: 'new york times',
+  date: 'may 7, 2015'
+}
+
+let findObj2 = {
+  publisher: 'boston globe',
+  date: 'december 12, 2018'
+}
 
 
-JSON.parse(newspaperList[a]); // ==> 
-//{ 'section A': 'Headlines...', 'section B': 'Sports...' }
+newspaperList.add(newspaper1);
+newspaperList.add(newspaper2);
+newspaperList.add(newspaper3);
+
+newspaperList.find(findObj1);
+
 
 ```
 
