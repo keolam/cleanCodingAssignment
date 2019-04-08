@@ -1,1 +1,0 @@
-const root1 = new Tree(8);
