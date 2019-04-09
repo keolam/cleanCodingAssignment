@@ -34,6 +34,13 @@ Programming Questions
 1. Create a hash table that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers.
 
 ```js
+hashCode = function(string, size){
+  let newCode = string.split('').reduce(function(a, b){
+    a = ((a << 5) -a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);    
+  return Math.abs(newCode) % size;    
+} 
 
 const hashTable = function(tableLength){
   let result = {};
@@ -108,6 +115,14 @@ customerInfo.find({phone: '415-213-4789'});
 
 ```js
 
+hashCode = function(string, size){
+  let newCode = string.split('').reduce(function(a, b){
+    a = ((a << 5) -a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);    
+  return Math.abs(newCode) % size;    
+} 
+
 const hashTable = function(tableLength){
   let result = {};
   let storage = [];
@@ -170,6 +185,14 @@ storeInventory.find({'item': 'drum machines'});
 3. Create a hash table that allows digital copies of newspapers to be entered and searched by publisher and publication date.
 
 ```js
+
+hashCode = function(string, size){
+  let newCode = string.split('').reduce(function(a, b){
+    a = ((a << 5) -a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);    
+  return Math.abs(newCode) % size;    
+} 
 
 const hashTable = function(tableLength){
   let result = {};
