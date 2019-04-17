@@ -1,0 +1,187 @@
+1. What is a binary tree and what makes it unique to other trees?
+
+A: A Binary tree is a data structure composed of nodes, where each node has at most two child nodes. When nodes have only two children, it decreases per-node search time but increases the number of nodes that the search needs to visit.
+
+2. What is a heuristic?
+
+A: A heuristic is a guess that an algorithm makes to solve a complex problem faster by sacrificing accuracy. It is sometimes not worth the extra time and effort to make an algorithm is 100% accurate, when 85% accurarcy serves your need just fine.
+
+3. What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+A: When scanning for viruses, algorithmd search for key pieces of code associated with a particular kind of virus, which reduces the number of files that need to be scanned. Also, different viruses of the same family can be detected without being known, sonce some viruses have common code markers.
+
+4. What is the difference between a depth-first search and a breadth-first search?
+
+A: Depth-first searches traverse a tree from the root at the top to bottom of a branch, then to continue, the search switches branch and traverses again down that branch until finding the given node.  A breadth-first search traverses one level of neighboring nodes and then continues the search on the next row until the node is found.
+
+5. Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+A: This is a graph data structure where each node's edges connecting to other nodes point at each other and are two-way where travel between two nodes can go in either direction. The graph is a-cyclical meaning the nodes' edges do not connect in a loop, and unweighted indicates that there is no cost in either time or extra work to traverse between the nodes
+
+6. What kind of graph is a binary search tree?
+
+A: A binary Search Tree is an undirected, a-cyclic, unweighted graph.
+
+
+
+Programming Questions
+For the following questions, describe in words how you could solve the problem and then do so. Use the depiction of the Binary Search Tree to refer to the examples.
+
+const Tree = function(value) {
+  this.value = value;
+  this.children = [];
+};
+
+Tree.prototype.isDescendant = function(child) {
+  if (this.children.indexOf(child) !== -1) {
+    return true;
+  } else {
+    for (let i = 0; i < this.children.length; i++) {
+      if (this.children[i].isDescendant(child)) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
+Tree.prototype.addChild = function(child) {
+  if (!child || !(child instanceof Tree)) {
+    child = new Tree(child);
+  }
+  if (!this.isDescendant(child)) {
+    this.children.push(child);
+  } else {
+    console.log('Child already on tree!');
+  }
+  return child;
+};
+
+Tree.prototype.findParent = function(child) {
+  let queue = [this]
+  while(queue.length) {
+    let current = queue.shift();
+    if (current.children[0] === child || 
+    current.children[1] === child) {
+        return current;
+    }
+    for (let i = 0; i < this.children.length; i++) {
+      queue.push(current.children[i]);
+    }
+  }
+};
+
+Tree.prototype.BFSearch = function(value) {
+  const queue = [[this, 0]];
+  while (queue.length > 0) {
+    const tuple = queue.shift();
+    const node = tuple[0];
+    const depth = tuple[1];
+    for (let child of node.children) {
+      queue.push([child, depth + 1]);
+    }
+    if (node.value === value){ 
+      return node;
+    };
+  };
+  return false;
+};
+
+const root1 = new Tree(8);
+const branch2 = root1.addChild(3);
+const branch3 = root1.addChild(10);
+const leaf4 = branch2.addChild(1);
+const branch5 = branch2.addChild(6);
+const branch6 = branch3.addChild(14);
+const leaf7 = branch5.addChild(4); 
+const leaf8 = branch5.addChild(7);
+const leaf9 = branch6.addChild(13);
+const leaf10 = branch6.addChild(15);
+
+console.dir(root1, {depth:null});
+
+```
+
+1. Given a Binary Search Tree and a value, write a function that checks to see whether the value exists within the tree.
+
+```js
+
+Tree.prototype.valueExists = function(value) {
+  if (this.BFSearch(value) !== false ) {
+    return 'The value ' + value + ' exists in the tree.';
+  }
+  return 'The value ' + value + ' does not exist in the tree.';
+}
+
+//tests:
+
+root1.valueExists(14); // ==> The value 14 exists in the tree.
+root1.valueExists(17); // ==> The value 17 does not exist in the tree.
+
+```
+2. Given a Binary Search Tree and two nodes, n1 and n2, write a function that finds the distance between the two nodes.
+
+```js
+
+Tree.prototype.findDistance = function(n1, n2){
+  if (!this.BFSearch(n1.value) || !this.BFSearch(n2.value)) {
+    return "One or more nodes do not exist";
+  }
+  this.distance = 0;
+  this.traverseTree = function(n1, n2) {
+    this.current = n1; 
+    if (this.current === n2) {
+      console.log('Distance: ' + this.distance);
+      return this.distance;
+    } else if (this.current.isDescendant(n2)) {
+        for (let i = 0; i < this.current.children.length; i++) {
+          if (this.current.children[i].isDescendant(n2) || 
+          this.current.children[i] === n2 ) {    
+            this.current = this.current.children[i];  
+            this.distance += 1;
+            this.traverseTree(this.current, n2);                     
+          }
+        }
+      } else {
+        this.current = this.findParent(this.current);
+        this.distance += 1;
+        this.traverseTree(this.current, n2);        
+      }
+  } 
+  this.traverseTree(n1, n2);
+}
+
+//tests:
+
+root1.findDistance(leaf8, leaf9);     // ==> Distance: 6
+root1.findDistance(root1, leaf4);     // ==> Distance: 2
+root1.findDistance(branch5, branch6); // ==> Distance: 4
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
