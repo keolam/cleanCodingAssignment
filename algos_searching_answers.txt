@@ -1,0 +1,79 @@
+1. What is a real-life scenario that uses linear search?
+
+A: Finding files on my computer that haven't been sorted makes me use linear search
+
+2. What is a real-life scenario that uses binary search?
+
+A: Digging through an alphabetized phone book 
+
+3. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using linear search?
+
+A: Seven
+
+4. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using binary search?
+
+A: Three
+
+5. Given an unsorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
+
+A: If sorting was not possible, I would need to use a linear search. Binary searches only work on sorted collections. 
+
+6. Given a sorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
+
+A: Binary, as it would be much exponentially faster
+
+Programming Assignment:
+
+1. You and a friend have set a wager to see who can find the word "Albatross" in the dictionary the fastest. Write a program to allow you to win the bet.
+
+```js
+
+let dictionary = ['aardvark', 'albatross', 'beetle', 'crow', 'dinosaur', 'elephant', 'fawn', 'giraffe', 'hippo', 'inchworm', 'joey', 'kangaroo', 'llama', 'monkey', 'new world ape', 'oragutan', 'pigeon', 'quayle', 'rhino', 'salamander', 'tortoise', 'ugly duck', 'very big gorilla', 'white owl', 'x-rayed jellyfish', 'yellow tang', 'zebra'];
+
+function binarySearch(array, string) {
+  let first = 0;
+  let middle = Math.floor(array.length/2);
+  let last = array.length -1;
+
+  while(true) {
+    if(array[middle] === string){
+      return 'Found It!';
+
+    } else if (array[first] <= string && string < array[middle]) {
+      last = middle -1;
+      middle = Math.floor((first + last)/2);
+
+    } else if (array[middle] < string && string <= array[last]){
+      first = middle +1;
+      middle = Math.floor((first + last)/2);
+    } else {
+      return 'That\'s not in this dictionary';
+    }
+  }
+}
+binarySearch(dictionary, 'albatross');
+
+```
+
+2. You work at a pet store, and a child has asked you to net the only white-spotted goldfish from the fish tank. Write a program that will help you net the right fish.
+
+```js
+
+let fishTank = ['angel fish', 'gourami', 'minnow', 'plecostomus', 'oscar', 'tetra', 'white-spotted goldfish','neon tetra'];
+
+function linearSearch(array, string) {
+  for (let i = 0; i < array.length; i++) {
+    if(array[i] === string) {
+      return "I got the fish!";
+    } 
+  }
+  return "That fish is not in there.";
+}
+
+linearSearch(fishTank, 'white-spotted goldfish');
+
+```
+
+
+
+
