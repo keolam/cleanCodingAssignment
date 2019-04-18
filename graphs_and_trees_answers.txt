@@ -8,7 +8,7 @@ A: A heuristic is a guess that an algorithm makes to solve a complex problem fas
 
 3. What is another problem besides the shortest-path problem that requires the use of heuristics?
 
-A: When scanning for viruses, algorithmd search for key pieces of code associated with a particular kind of virus, which reduces the number of files that need to be scanned. Also, different viruses of the same family can be detected without being known, sonce some viruses have common code markers.
+A: When scanning for viruses, algorithms search for key pieces of code associated with a particular kind of virus, which reduces the number of files that need to be scanned. Also, different viruses of the same family can be detected without being known, sonce some viruses have common code markers.
 
 4. What is the difference between a depth-first search and a breadth-first search?
 
@@ -16,7 +16,7 @@ A: Depth-first searches traverse a tree from the root at the top to bottom of a 
 
 5. Explain in your own words what an undirected, a-cyclic, unweighted graph is.
 
-A: This is a graph data structure where each node's edges connecting to other nodes point at each other and are two-way where travel between two nodes can go in either direction. The graph is a-cyclical meaning the nodes' edges do not connect in a loop, and unweighted indicates that there is no cost in either time or extra work to traverse between the nodes
+A: This is a graph data structure where each node's edges connecting to other nodes point at each other and are two-way, where travel between two nodes can go in either direction. The graph is a-cyclical meaning the nodes' edges do not connect in a loop, and unweighted indicates that there is no cost in either time or extra work to traverse between the nodes
 
 6. What kind of graph is a binary search tree?
 

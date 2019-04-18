@@ -1,0 +1,135 @@
+1.Define and compare recursion and iteration.
+
+A: Recursion is an approach to problem solving where a procedure that calls itself where parameters change each time the procedure occurs until the parameter matches the base-case, and at that point the function then returns a solution. Iteration is also when a procedure or function that is repeatedly used, but with recursion, the amount of times the function repeats is unknown and the algorithm works until base-case is found, whereas in iteration, the amount of repeats is known before execution and can be carried out using in a loop.
+
+2. Name five algorithms that are commonly implemented by recursion.
+
+A: Merge-sort, Binary Search Tree, Fibonacci sequence, factorial functions, and Greatest Common Divisor.
+
+3. When should you use recursion, and when should you avoid recursion? Give examples for each.
+
+A: Recursion should be used when a problem can be quickly solved by breaking it into smaller pieces and the stack size required will not cause a stack overflow. Recursion should be avoided when the time and space complexity required are less efficient than using iteration or another approach. In the factorial problem, the problem lends itself to recursion as it the solution is a sum of sub-results, exactly what recursion is. The finding maximum problem is an example where recursion should be avoided as the number of steps is double that of iterating over the array.
+
+4. Compare the recursive and iterative solutions to the three algorithms from the checkpoint (factorial, maximum, and fibonacci). What is similar, and what is different?
+
+A: The recursive factorial example starts with 3 as the first argument, and since it doesn't satisfy the base-case, it adds that 3 to a callstack, then it recurses the same function with the argument minus 1, which is 2. Since 2 also doesn't match the base-case, it adds 2 to the call-stack. The next time the function calls itself, the base case is met, so it returns 1, then the stack is called and the 1 is multiplied by 2 and 3, returning a product of 6. In the iterative version, the result is assigned 1 to start, then starts a descending loop from the initial argument, iterating down to 2, and multiplying the result by each iteration. The recursive solution uses 1 as a base case, while the iterative solution treats 1 as an edge case.
+
+The recursive maximum function takes an array and removes the value in first index and compares it to the next item in the array, then the greater number of the two is kept as the first item in the array. This recursively happens to the new array that is one item shorter, until base-case condition of a single-digit array is met, it returns that value. The iterative implementation is a little simpler, where the first value in the array is assigned as maximum value, then as it iterates throught the array, any value that is greater that mximum value becomes the maximum value. This leaves the highest value as maximum value. Both methods involve establishing a maximum value, and goes through each number updating the max value. The recursive solution requires more computing than the iterative.
+
+The recursive fibonacci sequence sets the base-case at 1 and 2, to both return the number 1, then recursively calls the function with to sum two calls, one with one less than target, and the other with 2 less than the target. The iterative solution establishes the first two digits in the sequence as 1, the iterates up to the target number summing the previous two numbers in the series to make the next number. The iterative solution builds on previously calculated numbers, but the recursive one repeats a lot of the same calculations.
+
+
+5. Given a multi-dimensional collection (such as an array) where the number of dimensions is unknown, write a recursive algorithm to count the number of items in the entire collection.
+
+A: 
+
+```js
+
+data = [
+	[{"firstName": "Roanna", "zip": "I0R 7T6"},
+	{"firstName": "Beck", "zip": "O4A 3L7"},
+	{"firstName": "Lysandra", "zip": "I1D 2E7"},
+	{"firstName": "Anika", "zip": "Q2C 5Y8"},
+	{"firstName": "Amanda", "zip": "X8I 9C2"},
+	{"firstName": "Martha", "zip": "U6A 7Z1"},
+	{"firstName": "Bell", "zip": "T8N 5H5"}
+  ],
+  [{"firstName": "Meredith", "zip": "F7X 9J0"},
+	{"firstName": "Quinn", "zip": "G8U 4E0"},
+	{"firstName": "Ryan", "zip": "B4N 8K9"},
+	{"firstName": "Mariko", "zip": "Y6C 5C5"},
+	{"firstName": "Hannah", "zip": "Z2O 1H2"},
+	{"firstName": "Kato", "zip": "T1C 1Q4"},
+	{"firstName": "Graiden", "zip": "P8C 3V9"}, 
+    [{"firstName": "Karyn", "zip": "V5M 4C7"},
+	  {"firstName": "Joel", "zip": "G4Q 9F1"},
+	  {"firstName": "Yael", "zip": "O7Y 2U0"},
+	  {"firstName": "Yoshi", "zip": "I0R 9C7"},
+	  {"firstName": "Jerry", "zip": "M9U 0P8"},
+	  {"firstName": "TaShya", "zip": "G4Z 2W7"},
+	  {"firstName": "Jaime", "zip": "F2E 0P0"}
+    ]
+  ], 
+  [{"firstName": "Oliver", "zip": "R3N 5C8"},
+	{"firstName": "Hiroko", "zip": "J4Y 3D6"},
+	{"firstName": "Kaye", "zip": "D2E 6R9"},
+	{"firstName": "Marsden", "zip": "S0U 9X7"},
+	{"firstName": "Yoshi", "zip": "O7Y 5Y5"}
+  ], 
+  [{"firstName": "Denise", "zip": "K2E 0J2"},
+	{"firstName": "Althea", "zip": "N1O 8X4"},
+	{"firstName": "Macaulay", "zip": "P9A 1N5"},
+	{"firstName": "Orlando", "zip": "B8O 7Z7"},
+	{"firstName": "Molly", "zip": "H8D 2F6"},
+	{"firstName": "Jesse", "zip": "R8O 6J0"},
+	{"firstName": "Thor", "zip": "R9E 9S9"},
+	{"firstName": "Eagan", "zip": "V6W 5U2"}
+  ],
+  [{"firstName": "Neve", "zip": "J8E 9N2"},
+	{"firstName": "Jonas", "zip": "C0R 5C5"},
+	{"firstName": "Kaseem", "zip": "Y6T 0J8"},
+	{"firstName": "Chester", "zip": "U3L 3H0"},
+	{"firstName": "Cadman", "zip": "H5L 3G0"},
+	{"firstName": "Arsenio", "zip": "T1N 4Q7"},
+	{"firstName": "Sydnee", "zip": "X8B 2H1"},
+	{"firstName": "Ezra", "zip": "K6A 3F9"},
+	{"firstName": "Armando", "zip": "A3Q 9M7"},
+	{"firstName": "Ariel", "zip": "B9H 9C4"},
+	{"firstName": "Ifeoma", "zip": "X0H 9W2"}
+  ]
+];
+
+function countObjects(array) {
+  let count = 0;
+  function getCount(array) {
+    array.forEach(function(item) {
+      if (!Array.isArray(item)){
+        count++;
+      } else {        
+        return getCount(item);
+      }      
+    });   
+  }
+  getCount(array);  
+  return count;
+}
+  
+countObjects(data);
+
+```
+
+6. A palindrome is a word or phrase whose spelling is the same either direction (e.g., racecar). Write a recursive algorithm to determine if a given word or phrase is a palindrome.
+
+A: 
+
+```js
+
+function isPalendrome(string) {
+  let arr = string.split('');
+  let answer;
+
+  function checkArray(arr) {
+    if (arr.length === 1 || 
+    (arr.length === 2 && arr[0] === arr[1])) {
+      answer = 'It is a palendrome'
+    } else if (arr.shift() === arr[arr.length-1]) {
+        arr.pop();
+        checkArray(arr);
+    } else {
+      answer = 'It is NOT a palendrome'
+    }
+  } 
+  checkArray(arr);
+  return answer;   
+}
+
+isPalendrome('racecar'); // ==> It is a palendrome
+isPalendrome('yo man'); // ==> It is NOT a palendrome
+
+```
+
+
+7. Google Easter Egg: Google the term "recursion". Google will prompt you with "Did you mean: recursion". Explain why this behavior exhibits properties of recursion.
+
+A: The result "Did you mean: recursion" is recursive because it enables you to employ the same search within your initial search and continuously  into each subsequent search.
+
