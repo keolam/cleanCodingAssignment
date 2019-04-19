@@ -1,0 +1,67 @@
+1. What is time complexity and what is its relation to algorithms?
+
+A: Time complexity is a measurement used to describe the efficiency of an algorithm.
+
+2. What is runtime?
+
+A: Runtime is the physical time duration of an algorithm, but the term is also used interchangably with time complexity.
+
+3. How is the runtime of an algorithm calculated?
+
+A: Time complexity is calculated by adding up how many instructions the algorithm will execute as a function of the size of its input, then simplifying it to it's largest term. For example, n^2 + 2n + 6 will be simplified to O(n^2).
+
+4. Name the six types of algorithm growth rates we saw in this checkpoint and list them in order of most efficient to least efficient. Now Google another algorithmic growth rate not covered and place it in the correct spot in your list.
+
+A: Constant O(1), Logarithmic O(log n), Linear O(n), Log-Linear O(n log n), Quadratic O(n^2), Exponential O(2^n), Factorial O(n!)
+
+5. Choose one of the algorithmic growth rates from the last question and make a comparison to a real-life situation.
+
+A:  Looking up a name in an alphabetically-sorted phone book by recursively dividing the pages in half until the name is found would have an O(log n) time-complexity.
+
+6. Determine the time complexity of the following snippet of code. It is commonly known as a linear search.
+FUNCTION linearSearch(array, target)
+ FOR each number in the array
+   IF number = target THEN
+     RETURN true
+   END IF
+ END FOR
+ RETURN false
+END FUNCTION
+
+
+O(n)
+
+7. Determine the time complexity of the following snippet of code.
+FUNCTION foo(array)
+ FOR each number in the array
+   FOR each number in the array
+     print "Hello"
+   END FOR
+ END FOR
+END FUNCTION
+
+
+O(n^2)
+
+8. Determine the time complexity of the following snippet of code. It is commonly known as the Fibonacci sequence.
+FUNCTION fibonacci(number)
+ IF number < 1 THEN
+   ERROR
+ ELSE IF number = 1 or 2 THEN
+   RETURN 1
+ ELSE
+   CALL fibonacci WITH number - 2 RETURNING twoBack
+   CALL fibonacci WITH number - 1 RETURNING oneBack
+   RETURN twoBack + oneBack
+ END IF
+END FUNCTION
+
+
+O(2^n)
+
+
+
+
+
+
+
