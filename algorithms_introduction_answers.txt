@@ -1,0 +1,50 @@
+1. Using proper pseudo-code, describe the following primitive algorithms:
+Making coffee;
+
+FUNCTION makeCoffee(beans)
+  
+  WHILE (water < 212°F)
+    INCREMENT heat to water
+    grind (beans) RETURN grounds
+    INSERT grounds in FILTER
+  END WHILE
+  WHILE (mugFull is FALSE)
+    pour water into mug through filter
+    SET mugFull to TRUE
+  END WHILE
+END FUNCTION 
+
+Washing dishes;
+
+FUNCTION cleanDishes(dirtyDishes, water, soap)
+  WHILE (dirtyDishes > 0)
+    APPLY water + soap to dishes
+    APPLY water to dishes
+    stack dishes in rack
+    IF dirtyDishes = 0
+  END WHILE
+END FUNCTION 
+
+
+A choice of your own.
+
+FUNCTION changeBaby(dirtyDiaper, cleanDiaper)
+  IF baby crying
+    CHECK diaper
+    IF diaper = dirtyDiaper
+      replace dirtyDiaper with cleanDiaper
+    ELSE
+      GIVE baby bottle  
+    close IF  
+  close IF
+END FUNCTION   
+
+2. As with the knot algorithm, there may be more than one way to solve the problem. It is essential to try to pick the best algorithm for a situation. Name three companies who created an algorithm that made them successful, e.g., Google's search algorithm. It doesn't need to be a tech example (such as a recipe or manufacturing a product). Google's algorithm produces more relevant results than other search engines; what about each of your cases make them stand out?
+
+A: Tinder made the best dating app because it's simplicty got more people using it more often. Instagram made the best photosharing platform due to the mobile platform, the likes and comments interface, and ease of user searching with hashtags. Spotify made the best streaming service by offering both playlist formats and full album, user-choice access, and social media interface.
+
+3. Hypothesize about what constitutes an efficient algorithm versus an inefficient algorithm.
+
+An efficient algorithm carefully considers all possible parameters and how much relavence each parameter has on the output, and can its capacity can scale up to a large amount of data. Inefficient algorithms take longer than neccessary and can't scale to handle various sizes of data.
+
+
