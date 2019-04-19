@@ -59,6 +59,9 @@ END FUNCTION
 
 O(2^n)
 
+9.Out of the code snippets you just saw, which is the most time efficient?
+
+The linearSearch function is more time efficient than the foo and Fibonacci functions.
 
 
 
