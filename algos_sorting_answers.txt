@@ -1,0 +1,48 @@
+1.Implement a solution for bubble sort.
+
+A: let bunchaNumbers = [4, 7, 2, 14, 19, 17, 6, 22, 16, 30, 24, 3];
+
+const bubbleSort = function(array){
+  let swapped = false;
+  while(!swapped) {  
+    swapped = true; 
+    for (let i = 0; i < array.length - 1; i++) {
+      if(array[i] > array[i + 1] ){       
+        let temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+        swapped = false;
+      }     
+    } 
+  } 
+  return array;
+}
+
+bubbleSort(bunchaNumbers); // ==> [ 2, 3, 4, 6, 7, 14, 16, 17, 19, 22, 24, 30 ]
+
+2. Write pseudocode for quicksort.
+
+A:
+    FUNCTION quickSort(collection)
+    define base case IF array is less than 2 RETURN array
+    SET pivot to last item in array
+    SET greaterThan to empty array
+    SET lesserThan to empty array
+      FOR i = FIRST INDEX of collection to LAST INDEX of collection - 1
+        IF  value is larger than pivot PUSH into greaterThan array
+        ELSE
+        IF value is smaller than pivot PUSH into lesserThan array
+      close IF
+    close FOR
+    
+  recursively CALL quicksort(lesserThan) and concatenate with pivot and recursively CALL quicksort(greaterThan) 
+
+3. We talked about time complexity in a previous checkpoint, and how to get an idea of the efficiency of an algorithm. After looking at the pseudocode for the above sorting methods, identify why merge sort and quick sort are much more efficient than the others. Walking through each algorithm with a few sample collections may help.
+
+A: Merge sort and quick sort both have log-linear time complexities (O(n log(n))) which is faster than methods like bubble and insertion sort that have a quadratic time complexity (O (n^2)). Merge sort and quick sort split the data sets and sort the smaller sub sets, while the bubble, insertion, and selection sort methods linearly iterate through the data sets repeatedly until they are sorted.
+
+4. All of the sorts addressed in this checkpoint are known as comparison sorts. Research bucket sort and explain how it works. What is the ideal input for bucket sort?
+
+A: Bucket sorting is where a data set is broken into subsets a.k.a. 'buckets' and each of those buckets are then sorted either with another sorting algorithm, or sorted recursively using the bucket sorting algorithm. Bucket sorting is ideal for data sets that have values that are uniformly distributed across the range of the data set.
+
+
