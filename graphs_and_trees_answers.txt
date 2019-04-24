@@ -20,7 +20,7 @@ A: This is a graph data structure where each node's edges connecting to other no
 
 6. What kind of graph is a binary search tree?
 
-A: A binary Search Tree is an undirected, a-cyclic, unweighted graph.
+A: A Binary Search Tree is a Directed Acyclic, Unweighted Graph.
 
 
 
@@ -50,7 +50,14 @@ Tree.prototype.addChild = function(child) {
     child = new Tree(child);
   }
   if (!this.isDescendant(child)) {
-    this.children.push(child);
+    if (this.children.length > 1) {
+      console.log('Node is full');
+    } else if (this.children.length === 1 
+      && (child.value > this.children[0].value)){
+      this.children.push(child);
+    } else {
+      this.children.unshift(child);
+    }
   } else {
     console.log('Child already on tree!');
   }
